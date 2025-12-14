@@ -2,28 +2,75 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Forward Movement")]
     public float forwardSpeed = 10f;
     public bool canMove = true;
+
+    [Header("Lane Switching")]
+    public float laneOffset = 3f;
+    public float laneChangeSpeed = 10f;
+    private int currentLane = 1; // 0 = Right, 1 = Center, 2 = Left
+    private Vector3 targetPosition;
+    private float startZ;
 
     private Animator anim;
 
     void Start()
     {
-        anim = GetComponent<Animator>();
+        anim = GetComponentInChildren<Animator>();
+
+        startZ = transform.position.z;
+        targetPosition = transform.position;
     }
 
     void Update()
     {
         if (canMove)
         {
-            // Move forward in the direction the player is facing
-            transform.Translate(transform.forward * forwardSpeed * Time.deltaTime, Space.World);
+            // ✅ Move forward along +X
+            transform.Translate(Vector3.right * forwardSpeed * Time.deltaTime, Space.World);
+
+            HandleLaneSwitching();
+            SmoothLaneMovement();
         }
 
-        // Jump input
+        HandleJumpInput();
+    }
+
+    void HandleJumpInput()
+    {
+        // ✅ Animation-only jump (your old system)
         if (Input.GetKeyDown(KeyCode.Space))
         {
             anim.SetTrigger("Jump");
         }
+    }
+
+    void HandleLaneSwitching()
+    {
+        // ✅ RightArrow → move toward –Z (your right)
+        if (Input.GetKeyDown(KeyCode.RightArrow) && currentLane > 0)
+        {
+            currentLane--;
+            UpdateTargetPosition();
+        }
+        // ✅ LeftArrow → move toward +Z (your left)
+        else if (Input.GetKeyDown(KeyCode.LeftArrow) && currentLane < 2)
+        {
+            currentLane++;
+            UpdateTargetPosition();
+        }
+    }
+
+    void UpdateTargetPosition()
+    {
+        float targetZ = startZ + (currentLane - 1) * laneOffset;
+        targetPosition = new Vector3(transform.position.x, transform.position.y, targetZ);
+    }
+
+    void SmoothLaneMovement()
+    {
+        Vector3 newPos = new Vector3(transform.position.x, transform.position.y, targetPosition.z);
+        transform.position = Vector3.Lerp(transform.position, newPos, laneChangeSpeed * Time.deltaTime);
     }
 }
