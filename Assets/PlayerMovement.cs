@@ -13,6 +13,9 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 targetPosition;
     private float startZ;
 
+    [Header("Jump State")]
+    public bool isJumping = false;
+
     private Animator anim;
 
     void Start()
@@ -27,9 +30,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (canMove)
         {
-            // ✅ Move forward along +X
             transform.Translate(Vector3.right * forwardSpeed * Time.deltaTime, Space.World);
-
             HandleLaneSwitching();
             SmoothLaneMovement();
         }
@@ -39,22 +40,28 @@ public class PlayerMovement : MonoBehaviour
 
     void HandleJumpInput()
     {
-        // ✅ Animation-only jump (your old system)
         if (Input.GetKeyDown(KeyCode.Space))
         {
             anim.SetTrigger("Jump");
+            isJumping = true;
+
+            // ✅ Reset jump after 0.8 seconds (match your animation length)
+            Invoke(nameof(EndJump), 0.8f);
         }
+    }
+
+    void EndJump()
+    {
+        isJumping = false;
     }
 
     void HandleLaneSwitching()
     {
-        // ✅ RightArrow → move toward –Z (your right)
         if (Input.GetKeyDown(KeyCode.RightArrow) && currentLane > 0)
         {
             currentLane--;
             UpdateTargetPosition();
         }
-        // ✅ LeftArrow → move toward +Z (your left)
         else if (Input.GetKeyDown(KeyCode.LeftArrow) && currentLane < 2)
         {
             currentLane++;
