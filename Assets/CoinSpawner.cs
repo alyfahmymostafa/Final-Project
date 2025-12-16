@@ -2,17 +2,12 @@ using UnityEngine;
 
 public class CoinSpawner : MonoBehaviour
 {
-    [Header("Spawn Timing")]
     public float minInterval = 0.8f;
     public float maxInterval = 1.6f;
 
-    [Header("Coin Prefabs")]
     public GameObject[] coinPrefabs;
+    public Transform[] lanes;
 
-    [Header("Lane Positions")]
-    public Transform[] lanes;   // same lanes as obstacles
-
-    [Header("Player Reference")]
     public Transform player;
     public float forwardOffset = 30f;
 
@@ -38,7 +33,7 @@ public class CoinSpawner : MonoBehaviour
     {
         transform.position = new Vector3(
             player.position.x + forwardOffset,
-            74f,
+            71.5f,
             10f
         );
     }
@@ -54,37 +49,25 @@ public class CoinSpawner : MonoBehaviour
 
         switch (pattern)
         {
-            case 0:
-                SpawnSingleCoin();
-                break;
-            case 1:
-                SpawnDoubleCoin();
-                break;
-            case 2:
-                SpawnCoinWall();
-                break;
+            case 0: SpawnSingleCoin(); break;
+            case 1: SpawnDoubleCoin(); break;
+            case 2: SpawnCoinWall(); break;
         }
     }
 
     void SpawnSingleCoin()
     {
-        int laneIndex = Random.Range(0, lanes.Length);
-        SpawnCoinAtLane(laneIndex);
+        SpawnCoinAtLane(Random.Range(0, lanes.Length));
     }
 
     void SpawnDoubleCoin()
     {
-        int firstLane = Random.Range(0, lanes.Length);
-        int secondLane;
+        int a = Random.Range(0, lanes.Length);
+        int b;
+        do { b = Random.Range(0, lanes.Length); } while (b == a);
 
-        do
-        {
-            secondLane = Random.Range(0, lanes.Length);
-        }
-        while (secondLane == firstLane);
-
-        SpawnCoinAtLane(firstLane);
-        SpawnCoinAtLane(secondLane);
+        SpawnCoinAtLane(a);
+        SpawnCoinAtLane(b);
     }
 
     void SpawnCoinWall()
@@ -94,22 +77,13 @@ public class CoinSpawner : MonoBehaviour
     }
 
     void SpawnCoinAtLane(int laneIndex)
-{
-    GameObject prefab = coinPrefabs[Random.Range(0, coinPrefabs.Length)];
-    Transform lane = lanes[laneIndex];
+    {
+        GameObject prefab = coinPrefabs[Random.Range(0, coinPrefabs.Length)];
+        Transform lane = lanes[laneIndex];
 
-    // Base ground height (same as obstacles) – adjust if your ground Y changes
-    float groundY = 70f;
+        Vector3 pos = new Vector3(transform.position.x, 71.5f + 1.5f, lane.position.z);
 
-    // Extra height to keep coin above ground
-    float coinHeightOffset = 2.0f; // you can tweak this
-
-    Vector3 spawnPos = new Vector3(
-        transform.position.x,
-        groundY + coinHeightOffset,
-        lane.position.z
-    );
-
-    Instantiate(prefab, spawnPos, Quaternion.identity);
-}
+        GameObject coin = Instantiate(prefab, pos, Quaternion.identity);
+        coin.tag = "Collectible";
+    }
 }

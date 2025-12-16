@@ -4,7 +4,6 @@ public class Collectible : MonoBehaviour
 {
     [SerializeField] private int value = 1;
     [SerializeField] private float rotateSpeed = 180f; // degrees per second
-    [SerializeField] private float verticalOffset = 0.5f; // local Y bump to lift coin
 
     private void Update()
     {
@@ -17,6 +16,9 @@ public class Collectible : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Debug.Log("Picked up coin +" + value);
+
+            // ✅ Add score using the new Unity API
+            Object.FindFirstObjectByType<ScoreAndTime>().AddScore(value);
 
             Destroy(gameObject);
         }

@@ -76,6 +76,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Coin_Gold_Base
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 162e73071fb9b74458e02649a1273dca, type: 3}
+      propertyPath: m_TagString
+      value: Collectible
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -86,6 +90,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 162e73071fb9b74458e02649a1273dca, type: 3}
       insertIndex: -1
       addedObject: {fileID: -1145624011335895488}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 162e73071fb9b74458e02649a1273dca, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4884566960372380617}
   m_SourcePrefab: {fileID: 100100000, guid: 162e73071fb9b74458e02649a1273dca, type: 3}
 --- !u!1 &5835149025752940900 stripped
 GameObject:
@@ -127,4 +134,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Collectible
   value: 1
   rotateSpeed: 180
-  verticalOffset: 0.5
+--- !u!114 &4884566960372380617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5835149025752940900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 722eb7347fe310447be2874a32e890e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DespawnWhenBehind
+  player: {fileID: 0}
+  distance: 80

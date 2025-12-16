@@ -2,17 +2,12 @@ using UnityEngine;
 
 public class ObstacleSpawner : MonoBehaviour
 {
-    [Header("Spawn Timing")]
     public float minInterval = 1.2f;
     public float maxInterval = 2.5f;
 
-    [Header("Obstacle Prefabs")]
     public GameObject[] obstaclePrefabs;
+    public Transform[] lanes;
 
-    [Header("Lane Positions")]
-    public Transform[] lanes;   // 0 = Left (Z=15), 1 = Middle (Z=10), 2 = Right (Z=5)
-
-    [Header("Player Reference")]
     public Transform player;
     public float forwardOffset = 30f;
 
@@ -37,9 +32,9 @@ public class ObstacleSpawner : MonoBehaviour
     void FollowPlayer()
     {
         transform.position = new Vector3(
-            player.position.x + forwardOffset,   // stay ahead on +X
-            71.5f,                               // ground height
-            10f                                  // middle lane Z
+            player.position.x + forwardOffset,
+            71.5f,
+            10f
         );
     }
 
@@ -54,37 +49,25 @@ public class ObstacleSpawner : MonoBehaviour
 
         switch (pattern)
         {
-            case 0:
-                SpawnSingleObstacle();
-                break;
-            case 1:
-                SpawnDoubleObstacle();
-                break;
-            case 2:
-                SpawnWall();
-                break;
+            case 0: SpawnSingleObstacle(); break;
+            case 1: SpawnDoubleObstacle(); break;
+            case 2: SpawnWall(); break;
         }
     }
 
     void SpawnSingleObstacle()
     {
-        int laneIndex = Random.Range(0, lanes.Length);
-        SpawnObstacleAtLane(laneIndex);
+        SpawnObstacleAtLane(Random.Range(0, lanes.Length));
     }
 
     void SpawnDoubleObstacle()
     {
-        int firstLane = Random.Range(0, lanes.Length);
-        int secondLane;
+        int a = Random.Range(0, lanes.Length);
+        int b;
+        do { b = Random.Range(0, lanes.Length); } while (b == a);
 
-        do
-        {
-            secondLane = Random.Range(0, lanes.Length);
-        }
-        while (secondLane == firstLane);
-
-        SpawnObstacleAtLane(firstLane);
-        SpawnObstacleAtLane(secondLane);
+        SpawnObstacleAtLane(a);
+        SpawnObstacleAtLane(b);
     }
 
     void SpawnWall()
@@ -98,15 +81,9 @@ public class ObstacleSpawner : MonoBehaviour
         GameObject prefab = obstaclePrefabs[Random.Range(0, obstaclePrefabs.Length)];
         Transform lane = lanes[laneIndex];
 
-        Vector3 spawnPos = new Vector3(
-            transform.position.x,   // ahead of player
-            70f,                  // ground height
-            lane.position.z         // ✅ correct lane Z (fix applied)
-        );
+        Vector3 pos = new Vector3(transform.position.x, 71.5f, lane.position.z);
 
-        GameObject obstacle = Instantiate(prefab, spawnPos, Quaternion.identity);
-
-        float scale = Random.Range(1.2f, 2.0f);
-        obstacle.transform.localScale = Vector3.one * scale;
+        GameObject obj = Instantiate(prefab, pos, Quaternion.identity);
+        obj.tag = "Obstacle";
     }
 }

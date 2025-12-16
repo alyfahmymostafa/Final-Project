@@ -16,6 +16,9 @@ public class PlayerMovement : MonoBehaviour
     [Header("Jump State")]
     public bool isJumping = false;
 
+    [Header("Death State")]
+    public bool isDead = false;
+
     private Animator anim;
 
     void Start()
@@ -28,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (canMove)
+        if (canMove && !isDead)
         {
             transform.Translate(Vector3.right * forwardSpeed * Time.deltaTime, Space.World);
             HandleLaneSwitching();
@@ -40,12 +43,13 @@ public class PlayerMovement : MonoBehaviour
 
     void HandleJumpInput()
     {
+        if (isDead) return;
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             anim.SetTrigger("Jump");
             isJumping = true;
 
-            // ✅ Reset jump after 0.8 seconds (match your animation length)
             Invoke(nameof(EndJump), 0.8f);
         }
     }
@@ -79,5 +83,15 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 newPos = new Vector3(transform.position.x, transform.position.y, targetPosition.z);
         transform.position = Vector3.Lerp(transform.position, newPos, laneChangeSpeed * Time.deltaTime);
+    }
+
+    // ✅ Trigger falling animation + stop movement
+    public void PlayFall()
+    {
+        if (isDead) return;
+
+        isDead = true;
+        canMove = false;
+        anim.SetTrigger("Fall");
     }
 }

@@ -121,6 +121,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1930294593261569636}
   - component: {fileID: -7456578597317075190}
+  - component: {fileID: 3015041472332651044}
   m_Layer: 7
   m_Name: Hydrant prefab (3)
   m_TagString: Obstacle
@@ -165,3 +166,17 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3015041472332651044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4526971372323329118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 722eb7347fe310447be2874a32e890e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DespawnWhenBehind
+  player: {fileID: 0}
+  distance: 80
