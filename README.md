@@ -24,7 +24,11 @@ Background music and sound effects
 
 Baked lighting and a complete 3D environment
 
-Controls Move Left: A or Left Arrow Move Right: D or Right Arrow Jump: Space Pause: Escape
+Controls 
+Move Left: Left Arrow 
+Move Right:Right Arrow 
+Jump: Space 
+Pause: Escape
 
 How to Play Start the game from the main menu. Avoid obstacles by switching lanes or jumping. Collect coins to increase your score. Survive as long as possible. When you die, the Game Over screen will appear and you can restart.
 
