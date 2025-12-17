@@ -50,6 +50,9 @@ public class PlayerMovement : MonoBehaviour
             anim.SetTrigger("Jump");
             isJumping = true;
 
+            // ✅ Play jump sound
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.jumpSound);
+
             Invoke(nameof(EndJump), 0.8f);
         }
     }

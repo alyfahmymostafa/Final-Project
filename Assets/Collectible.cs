@@ -17,6 +17,9 @@ public class Collectible : MonoBehaviour
         {
             Debug.Log("Picked up coin +" + value);
 
+            // ✅ Play coin sound
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.coinSound);
+
             // ✅ Add score using the new Unity API
             Object.FindFirstObjectByType<ScoreAndTime>().AddScore(value);
 

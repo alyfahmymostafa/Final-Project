@@ -33,6 +33,10 @@ public class GameOverUI : MonoBehaviour
 
     public void Restart()
     {
+        // ✅ Restart background music
+        AudioManager.Instance.PlayMusic(AudioManager.Instance.musicSource.clip);
+
+        // Reload the scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

@@ -16,6 +16,12 @@ public class PlayerCollision : MonoBehaviour
         if (movement.isDead)
             return;
 
+        // ✅ Play hit sound
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.hitSound);
+
+        // ✅ Play falling/game-over sound
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.fallSound);
+
         movement.PlayFall();
         movement.isDead = true;
 
@@ -32,6 +38,9 @@ public class PlayerCollision : MonoBehaviour
 
         // ✅ Stop score + time
         Object.FindFirstObjectByType<ScoreAndTime>().Stop();
+
+        // ✅ Stop background music immediately
+        AudioManager.Instance.musicSource.Stop();
 
         // Stop obstacle spawning
         ObstacleSpawner spawner = Object.FindFirstObjectByType<ObstacleSpawner>();

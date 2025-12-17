@@ -27,6 +27,9 @@ public class PauseMenu : MonoBehaviour
 
         Time.timeScale = 0f; // freeze game
         isPaused = true;
+
+        // ✅ Lower or mute music while paused (optional)
+        AudioManager.Instance.musicSource.volume = 0.2f;
     }
 
     public void ResumeGame()
@@ -36,11 +39,18 @@ public class PauseMenu : MonoBehaviour
 
         Time.timeScale = 1f; // unfreeze game
         isPaused = false;
+
+        // ✅ Restore music volume
+        AudioManager.Instance.musicSource.volume = 1f;
     }
 
     public void GoToMainMenu()
     {
         Time.timeScale = 1f; // reset time before switching scenes
+
+        // ✅ Restart music for main menu
+        AudioManager.Instance.PlayMusic(AudioManager.Instance.musicSource.clip);
+
         SceneManager.LoadScene("MainMenu");
     }
 

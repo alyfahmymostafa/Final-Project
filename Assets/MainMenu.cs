@@ -7,6 +7,9 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame()
     {
+        // ✅ Start background music for gameplay
+        AudioManager.Instance.PlayMusic(AudioManager.Instance.musicSource.clip);
+
         SceneManager.LoadScene("DemoScene");
     }
 
