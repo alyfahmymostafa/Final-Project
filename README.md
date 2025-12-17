@@ -38,4 +38,4 @@ Unity Version This project was created using Unity 2022/2023/6000.x (use your ac
 
 Credits All code written by Aly. 3D coin assets from the PolyKebab Stylized Coin Pack. Music and sound effects from free online sources.
 
-Gameplay Video A short gameplay video (1–3 minutes) demonstrating the main menu, gameplay, pause menu, and game over screen should be included as part of the submission. Add the link here once recorded.
+Gameplay Video A short gameplay video (1–3 minutes) demonstrating the main menu, gameplay, pause menu, and game over screen should be included as part of the submission. 
